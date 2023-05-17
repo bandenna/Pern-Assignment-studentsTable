@@ -1,0 +1,53 @@
+.for-inputs{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.for-button{
+    height:60px;
+    width:60px;
+}
+.style-name{
+    font-family: "Roboto";
+}
+.deletes{
+    color:red;
+
+}
+.colo{
+    background-color:#e67300;
+}
+.btu{
+   
+    border-width:0px;
+    background-color: transparent;
+}
+.edits{
+    color:orange;
+
+}
+.kk{
+    height:30px;
+    width:230px;
+    margin-right:30px;
+}
+.for-label{
+    margin-right:4px;
+}
+.tables{
+    margin-bottom:60px;
+  }
+.for-control{
+    display: flex;
+    flex-direction: column;
+}
+.for-search{
+    margin-left:30px;
+    margin-bottom: 30px;
+}
+.btnStyle{
+    height:30px;
+    width:120px;
+    border-radius:5px;
+    border:none;
+}

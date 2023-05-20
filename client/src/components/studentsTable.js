@@ -30,7 +30,7 @@ const style = {
 };
 
 export default function Studenttable() {
-  const [searchValue,setSearch]=useState('')
+  const [searchValue, setSearch] = useState('')
   const [stuId, setId] = useState("");
   const [name, setName] = useState("");
   const [stuBranch, setBranch] = useState("");
@@ -38,19 +38,20 @@ export default function Studenttable() {
   const [studentsData, setData] = useState([]);
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
+  const [defau, setSor] = useState('ASC')
 
-  const userData=async(event)=>{
-    const val=event.target.value
-    if(val===""){
+  const userData = async (event) => {
+    const val = event.target.value
+    if (val === "") {
       getData()
-    }else{
-      const filterData=await fetch(`http://localhost:5002/students/${val}`)
-    const jsonData=await filterData.json();
-    console.log(jsonData.rows)
-    setData(jsonData.rows)
+    } else {
+      const filterData = await fetch(`http://localhost:5002/students/${val}`)
+      const jsonData = await filterData.json();
+      console.log(jsonData.rows)
+      setData(jsonData.rows)
 
     }
-    
+
   }
 
   const deleteButton = async (id) => {
@@ -64,11 +65,11 @@ export default function Studenttable() {
   };
 
   const updateEditData = (each) => {
-     const {sno,student_id,student_name,student_branch,student_class}=each 
-     setId(sno)
-     setName(student_name)
-     setBranch(student_branch)
-     setClass(student_class)
+    const { sno, student_id, student_name, student_branch, student_class } = each
+    setId(sno)
+    setName(student_name)
+    setBranch(student_branch)
+    setClass(student_class)
   }
 
   const editButton = async (id) => {
@@ -97,13 +98,51 @@ export default function Studenttable() {
   };
   useEffect(() => {
     getData();
-    
+    //sortTheItems()
     // userData();
+    kk();
   }, []);
+
+  const kk = async () => {
+    const response = await fetch('http://localhost:5002/studentsss?sortorder=ASC')
+    const sordata = await response.json()
+    setData(sordata.rows)
+  }
+
+  const sortTheItems = async (event) => {
+    console.log(";;;;;;")
+    try {
+      if (event.target.value === "ASC") {
+        console.log("ASC")
+        setSor(event.target.value)
+
+        const response = await fetch('http://localhost:5002/studentsss?sortorder=ASC')
+        const sordata = await response.json()
+        setData(sordata.rows)
+      } else if (event.target.value === "DESC") {
+        console.log("DESC")
+        setSor(event.target.value)
+
+        const response = await fetch(`http://localhost:5002/studentsss?sortorder=DESC`)
+        const sordata = await response.json()
+        setData(sordata.rows)
+
+      }
+
+    } catch (e) {
+      console.error(e.message)
+    }
+
+  }
   return (
     <div>
       <div className="d-flex flex-row">
-      <input className="kk for-search form-control" placeholder="type to search" type="search" onChange={(event)=>{userData(event)}}/>
+        <input className="kk for-search form-control" placeholder="type to search" type="search" onChange={(event) => { userData(event) }} />
+        <select className='kk form-control' onChange={sortTheItems}>
+          <option value="ASC">Assending order</option>
+          <option value="DESC">Desending order</option>
+        </select>
+
       </div>
       <TableContainer component={Paper}>
         <Table sx={{ minwidth: 650 }} aria-label="simple table">
@@ -142,7 +181,7 @@ export default function Studenttable() {
                 <TableCell align="right">
                   <button className="btu">
                     <DriveFileRenameOutlineIcon
-                      onClick={() => {setOpen(true);updateEditData(each)}}
+                      onClick={() => { setOpen(true); updateEditData(each) }}
                       className="edits"
                     />
                   </button>
@@ -200,7 +239,7 @@ export default function Studenttable() {
                         </div>
                         {/* debuggingggg */}
                         <button
-                          onClick={() => {editButton(stuId)}}
+                          onClick={() => { editButton(stuId) }}
                           className="btn btn-primary mt-3"
                         >
                           Edit

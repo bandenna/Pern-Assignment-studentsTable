@@ -80,8 +80,8 @@ app.put("/studentss/:id", async (req, res) => {
     try {
         const { id } = req.params
         console.log({ id })
-        const { student_id, student_name, student_branch, student_class } = req.body
-        const update_student_data = await pool.query("UPDATE student_table SET student_id=$1,student_name=$2,student_branch=$3,student_class=$4 WHERE sno=$5", [student_id, student_name, student_branch, student_class, id])
+        const { student_id, student_name, student_branch, student_class, student_image } = req.body
+        const update_student_data = await pool.query("UPDATE student_table SET student_id=$1,student_name=$2,student_branch=$3,student_class=$4 ,student_image=$5 WHERE sno=$6 ", [student_id, student_name, student_branch, student_class, student_image, id])
         res.send(update_student_data)
         console.log(update_student_data)
     } catch (e) {

@@ -2,8 +2,9 @@ const express = require("express")
 const app = express()
 const cors = require("cors")
 const pool = require("./db")
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb' }));
 app.use(cors())
-app.use(express.json())
 
 
 //sorting function 
@@ -53,9 +54,8 @@ app.get("/students/:id", async (req, res) => {
 //create student data //
 app.post("/students", async (req, res) => {
     try {
-        const { student_id, student_name, student_branch, student_class } = req.body
-        // console.log(student_name)
-        const new_student = await pool.query("INSERT INTO student_table(student_id,student_name,student_branch,student_class) VALUES($1,$2,$3,$4)", [student_id, student_name, student_branch, student_class])
+        const { student_id, student_name, student_branch, student_class, student_image } = req.body
+        const new_student = await pool.query("INSERT INTO student_table (student_id,student_name,student_branch,student_class,student_image) VALUES($1,$2,$3,$4,$5)", [student_id, student_name, student_branch, student_class, student_image])
         console.log("@#", new_student)
         res.json(new_student)
 

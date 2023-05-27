@@ -149,6 +149,7 @@ export default function Studenttable() {
           <TableHead>
             <TableRow>
               <TableCell className="style-name">serial_number</TableCell>
+              <TableCell className="style-name">student_image</TableCell>
               <TableCell align="right">student_id</TableCell>
               <TableCell align="right">student_name</TableCell>
               <TableCell align="right">student_branch</TableCell>
@@ -166,6 +167,7 @@ export default function Studenttable() {
                 <TableCell component="th" scope="row">
                   {each.sno}
                 </TableCell>
+                <TableCell align="right"><img className="for-image" src={each.student_image} alt="image" /></TableCell>
                 <TableCell align="right">{each.student_id}</TableCell>
                 <TableCell align="right">{each.student_name}</TableCell>
                 <TableCell align="right">{each.student_branch}</TableCell>

@@ -32,6 +32,7 @@ const style = {
 export default function Studenttable() {
   const [searchValue, setSearch] = useState('')
   const [stuId, setId] = useState("");
+  const [stuImage, setImage] = useState('')
   const [name, setName] = useState("");
   const [stuBranch, setBranch] = useState("");
   const [stuClass, setClass] = useState("");
@@ -39,6 +40,25 @@ export default function Studenttable() {
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
   const [defau, setSor] = useState('ASC')
+
+  const stdentImage = async (event) => {
+    const file = event.target.files[0]
+    const base64 = await baseconvert64(file)
+    setImage(base64)
+  }
+  const baseconvert64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file)
+      reader.onload = () => {
+        resolve(reader.result)
+      }
+      reader.onerror = () => {
+        reject(reader.error)
+      }
+    })
+
+  }
 
   const userData = async (event) => {
     const val = event.target.value
@@ -65,27 +85,29 @@ export default function Studenttable() {
   };
 
   const updateEditData = (each) => {
-    const { sno, student_id, student_name, student_branch, student_class } = each
+    const { sno, student_id, student_name, student_branch, student_class, student_image } = each
     setId(sno)
     setName(student_name)
     setBranch(student_branch)
     setClass(student_class)
+    setImage(student_image)
   }
 
   const editButton = async (id) => {
-    console.log("88888", id);
+    console.log("sjbjkddkjblj", stuImage)
     const obj = {
       student_id: stuId,
       student_name: name,
       student_branch: stuBranch,
       student_class: stuClass,
+      student_image: stuImage
     };
+
     const editData = await fetch(`http://localhost:5002/studentss/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(obj),
     });
-    console.log(editData);
   };
   const getData = async () => {
     try {
@@ -134,6 +156,7 @@ export default function Studenttable() {
     }
 
   }
+  console.log(`data:image/jpeg;base64,${stuImage}`)
   return (
     <div>
       <div className="d-flex flex-row">
@@ -212,6 +235,19 @@ export default function Studenttable() {
                             className="form-control"
                           />
                         </div>
+
+
+                        <div>
+                          <label>Student Image</label>
+                          <img className="from" src={stuImage} alt="img" />
+
+                          <input
+                            type="file"
+                            className="form-control"
+                            onChange={stdentImage}
+                          />
+                        </div>
+
                         <div>
                           <label>Student name</label>
                           <input

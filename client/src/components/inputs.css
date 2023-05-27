@@ -48,6 +48,13 @@
     width: 120px;
 }
 
+.from {
+    height: 60px;
+    width: 60px;
+    margin: 10px;
+    border-radius: 4px;
+}
+
 .tables {
     margin-bottom: 60px;
 }
